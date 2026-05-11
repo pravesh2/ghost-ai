@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: 226 14% 11%;
+  --foreground: 210 16% 96%;
+  --muted: 228 18% 12%;
+  --muted-foreground: 215 20% 60%;
+  --border: 226 15% 18%;
+  --input: 226 15% 18%;
+  --ring: 215 20% 76%;
+  --primary: 206 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 160 80% 50%;
+  --secondary-foreground: 0 0% 100%;
+  --destructive: 358 79% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --accent: 190 88% 68%;
+  --accent-foreground: 213 32% 17%;
+  --popover: 226 14% 11%;
+  --popover-foreground: 210 16% 96%;
+  --card: 226 14% 14%;
+  --card-foreground: 210 16% 96%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  margin: 0;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.25);
+  color: hsl(var(--primary-foreground));
+}
+
+@layer utilities {
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+  }
+  .hover\:bg-primary\/90:hover {
+    background-color: hsl(var(--primary) / .9);
+  }
+  .bg-destructive {
+    background-color: hsl(var(--destructive));
+  }
+  .text-destructive-foreground {
+    color: hsl(var(--destructive-foreground));
+  }
+  .hover\:bg-destructive\/90:hover {
+    background-color: hsl(var(--destructive) / .9);
+  }
+  .border-input {
+    border-color: hsl(var(--input));
+  }
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+  .bg-background\/80 {
+    background-color: hsl(var(--background) / .8);
+  }
+  .hover\:bg-accent:hover {
+    background-color: hsl(var(--accent));
+  }
+  .text-accent-foreground {
+    color: hsl(var(--accent-foreground));
+  }
+  .bg-secondary {
+    background-color: hsl(var(--secondary));
+  }
+  .text-secondary-foreground {
+    color: hsl(var(--secondary-foreground));
+  }
+  .hover\:bg-secondary\/80:hover {
+    background-color: hsl(var(--secondary) / .8);
+  }
+  .ring-offset-background {
+    --tw-ring-offset-color: hsl(var(--background));
+  }
+  .focus-visible\:ring-ring:focus-visible {
+    --tw-ring-color: hsl(var(--ring));
+  }
 }
