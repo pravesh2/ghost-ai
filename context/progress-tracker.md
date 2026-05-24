@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Complete remaining UI primitives and verify all components work as specified
+- Complete Clerk authentication integration with protected routes and UI
 
 ## Completed
 
@@ -16,6 +16,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Installed all required Radix UI dependencies (@radix-ui/react-dialog, @radix-ui/react-primitive, @radix-ui/react-scroll-area, @radix-ui/react-slot, @radix-ui/react-tabs)
 - Installed shadcn/ui utility libraries (clsx, tailwind-merge, class-variance-authority)
 - Created lib/utils.ts with cn() helper for merging Tailwind classes
+- Installed @clerk/ui for authentication UI
 
 ## In Progress
 
@@ -26,6 +27,14 @@ Update this file whenever the current phase, active feature, or implementation s
 - Add the next planned feature unit here.
 
 ## Recent Completions
+
+- **Authentication Integration**: COMPLETE
+  - Added root `app/layout.tsx` wrapper with `ClerkProvider` using Clerk dark theme
+  - Added `proxy.ts` to protect all routes by default and allow public auth routes only
+  - Added sign-in and sign-up pages with minimal two-panel desktop layouts and CSS variable driven styling
+  - Added `UserButton` to editor navbar for built-in Clerk user menu and logout
+  - Updated `/` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`
+  - Build verification passed with no errors
 
 - **Editor Chrome Implementation**: COMPLETE
   - Created components/editor/editor-navbar.tsx with fixed-height navbar, sidebar toggle button, and dark styling
