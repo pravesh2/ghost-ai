@@ -49,6 +49,16 @@ Update this file whenever the current phase, active feature, or implementation s
   - Dark theme styling applied and verified across all components
   - Build verification passed with no errors
 
+- **Sign-in/Sign-up UI Refinement**: COMPLETE
+  - Updated both sign-in and sign-up pages with 50/50 left-right layout matching screenshot
+  - Added lucide-react icons (Zap, Users, FileText) for feature highlights
+  - Improved typography: larger logo (text-4xl), proper heading hierarchy, correct font sizes
+  - Enhanced spacing and visual hierarchy with proper Tailwind classes
+  - Applied proper CSS variable tokens for colors (--bg-surface, --accent-primary, etc.)
+  - Added footer copyright text
+  - Removed inline style attributes, using font-geist-sans class instead
+  - Left panel uses bg-surface for better visual separation from dark background
+
 ## Open Questions
 
 - Add unresolved product or implementation questions here.
