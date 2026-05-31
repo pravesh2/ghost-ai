@@ -100,6 +100,9 @@ body {
   .text-brand {
     color: var(--accent-primary);
   }
+  .border-brand {
+    border-color: var(--accent-primary);
+  }
   
   /* Legacy utilities */
   .bg-primary {

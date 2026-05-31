@@ -17,11 +17,27 @@ _dir="$PWD"
 while true; do
   for _envfile in "$_dir/.env" "$_dir/.env.local"; do
     if [[ -f "$_envfile" ]]; then
-      set -a
-      source "$_envfile"
-      set +a
+      while IFS= read -r line || [[ -n "$line" ]]; do
+        if [[ "$line" == "" ]] || [[ "$line" == \#* ]]; then
+          continue
+        fi
+
+        if [[ "$line" =~ ^([A-Za-z_][A-Za-z0-9_]*)=(.*)$ ]]; then
+          key="${BASH_REMATCH[1]}"
+          value="${BASH_REMATCH[2]}"
+
+          if [[ "$value" =~ ^\"(.*)\"$ ]]; then
+            value="${BASH_REMATCH[1]}"
+          elif [[ "$value" =~ ^\'(.*)\'$ ]]; then
+            value="${BASH_REMATCH[1]}"
+          fi
+
+          export "$key=$value"
+        fi
+      done < "$_envfile"
     fi
   done
+
   [[ -n "${CLERK_SECRET_KEY:-}" ]] && break
   _parent="$(dirname "$_dir")"
   [[ "$_parent" == "$_dir" ]] && break

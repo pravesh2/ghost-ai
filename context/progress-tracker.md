@@ -16,11 +16,11 @@ Update this file whenever the current phase, active feature, or implementation s
 - Installed all required Radix UI dependencies (@radix-ui/react-dialog, @radix-ui/react-primitive, @radix-ui/react-scroll-area, @radix-ui/react-slot, @radix-ui/react-tabs)
 - Installed shadcn/ui utility libraries (clsx, tailwind-merge, class-variance-authority)
 - Created lib/utils.ts with cn() helper for merging Tailwind classes
-- Installed @clerk/ui for authentication UI
+- Installed @clerk/nextjs and @clerk/ui for authentication UI
 
 ## In Progress
 
-- None
+- Project dialogs & editor home implementation
 
 ## Next Up
 

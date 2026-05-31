@@ -73,7 +73,8 @@ export async function POST(req: NextRequest) {
   if (evt.type === 'user.updated') {
     const { id, email_addresses, first_name, last_name } = evt.data
     const email = email_addresses[0]?.email_address
-    await db.users.update({ where: { clerkId: id }, data: { email, first_name, last_name } })
+    const name = `${first_name ?? ''} ${last_name ?? ''}`.trim()
+    await db.users.update({ where: { clerkId: id }, data: { email, name } })
   }
 
   if (evt.type === 'user.deleted') {
@@ -137,7 +138,20 @@ export async function POST(req: NextRequest) {
     })
 
     // Step 5: Post notification to Slack channel
-    await fetch(process.env.SLACK_WEBHOOK_URL!, {
+    const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
+    if (!slackWebhookUrl) {
+      console.error('Missing SLACK_WEBHOOK_URL environment variable')
+      return new Response('Slack webhook URL is not configured', { status: 500 })
+    }
+
+    try {
+      new URL(slackWebhookUrl)
+    } catch (err) {
+      console.error('Invalid SLACK_WEBHOOK_URL:', err)
+      return new Response('Invalid Slack webhook URL', { status: 500 })
+    }
+
+    await fetch(slackWebhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
