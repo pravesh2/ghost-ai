@@ -9,6 +9,7 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Current Goal
 
 - Complete Clerk authentication integration with protected routes and UI
+- Add project data layer and Prisma integration
 
 ## Completed
 
@@ -17,14 +18,23 @@ Update this file whenever the current phase, active feature, or implementation s
 - Installed shadcn/ui utility libraries (clsx, tailwind-merge, class-variance-authority)
 - Created lib/utils.ts with cn() helper for merging Tailwind classes
 - Installed @clerk/nextjs and @clerk/ui for authentication UI
+- Added Prisma data models and client:
+  - `Project` and `ProjectCollaborator` models added to schema
+  - `prisma/models/project.prisma` created (source copy)
+  - `app/generated/prisma/schema.prisma` updated with models and `ProjectStatus` enum
+  - `lib/prisma.ts` created as a cached Prisma client singleton
+  - Prisma Client generated (`npx prisma generate`) successfully
 
 ## In Progress
 
 - Project dialogs & editor home implementation
+- Run database migration to apply Prisma schema (awaiting `DATABASE_URL`)
 
 ## Next Up
 
-- Add the next planned feature unit here.
+- Configure `DATABASE_URL` in `.env.local` and run migration (`prisma migrate` or `prisma db push`) to create DB tables
+- Verify `npm run build` passes after migrations
+- Implement project CRUD endpoints and tests
 
 ## Recent Completions
 
