@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Complete remaining UI primitives and verify all components work as specified
+- Complete Clerk authentication integration with protected routes and UI
 
 ## Completed
 
@@ -16,16 +16,25 @@ Update this file whenever the current phase, active feature, or implementation s
 - Installed all required Radix UI dependencies (@radix-ui/react-dialog, @radix-ui/react-primitive, @radix-ui/react-scroll-area, @radix-ui/react-slot, @radix-ui/react-tabs)
 - Installed shadcn/ui utility libraries (clsx, tailwind-merge, class-variance-authority)
 - Created lib/utils.ts with cn() helper for merging Tailwind classes
+- Installed @clerk/nextjs and @clerk/ui for authentication UI
 
 ## In Progress
 
-- None
+- Project dialogs & editor home implementation
 
 ## Next Up
 
 - Add the next planned feature unit here.
 
 ## Recent Completions
+
+- **Authentication Integration**: COMPLETE
+  - Added root `app/layout.tsx` wrapper with `ClerkProvider` using Clerk dark theme
+  - Added `proxy.ts` to protect all routes by default and allow public auth routes only
+  - Added sign-in and sign-up pages with minimal two-panel desktop layouts and CSS variable driven styling
+  - Added `UserButton` to editor navbar for built-in Clerk user menu and logout
+  - Updated `/` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`
+  - Build verification passed with no errors
 
 - **Editor Chrome Implementation**: COMPLETE
   - Created components/editor/editor-navbar.tsx with fixed-height navbar, sidebar toggle button, and dark styling
@@ -39,6 +48,16 @@ Update this file whenever the current phase, active feature, or implementation s
   - lib/utils.ts with cn() helper for Tailwind class merging
   - Dark theme styling applied and verified across all components
   - Build verification passed with no errors
+
+- **Sign-in/Sign-up UI Refinement**: COMPLETE
+  - Updated both sign-in and sign-up pages with 50/50 left-right layout matching screenshot
+  - Added lucide-react icons (Zap, Users, FileText) for feature highlights
+  - Improved typography: larger logo (text-4xl), proper heading hierarchy, correct font sizes
+  - Enhanced spacing and visual hierarchy with proper Tailwind classes
+  - Applied proper CSS variable tokens for colors (--bg-surface, --accent-primary, etc.)
+  - Added footer copyright text
+  - Removed inline style attributes, using font-geist-sans class instead
+  - Left panel uses bg-surface for better visual separation from dark background
 
 ## Open Questions
 
