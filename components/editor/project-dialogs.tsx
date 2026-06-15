@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import type { DialogType, Project } from "@/hooks/use-project-dialogs"
+import type { DialogType, Project } from "@/hooks/use-project-actions"
 
 interface ProjectDialogsProps {
   isOpen: boolean

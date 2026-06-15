@@ -4,60 +4,70 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature Implementation Phase 1
+- Feature Implementation Phase 1 (in-progress - bug fixes)
 
 ## Current Goal
 
-- Complete Clerk authentication integration with protected routes and UI
+- Implement share dialog collaborator management for editor workspaces
+- Verify share dialog build and API wiring
 
 ## Completed
 
-- Installed lucide-react for icons
-- Installed all required Radix UI dependencies (@radix-ui/react-dialog, @radix-ui/react-primitive, @radix-ui/react-scroll-area, @radix-ui/react-slot, @radix-ui/react-tabs)
-- Installed shadcn/ui utility libraries (clsx, tailwind-merge, class-variance-authority)
-- Created lib/utils.ts with cn() helper for merging Tailwind classes
-- Installed @clerk/nextjs and @clerk/ui for authentication UI
+- Implemented Prisma schema with Project and ProjectCollaborator models
+- Implemented backend project APIs:
+  - `GET /api/projects` lists the current user's projects
+  - `POST /api/projects` creates a project and defaults missing names to `Untitled Project`
+  - `PATCH /api/projects/[projectId]` renames a project
+  - `DELETE /api/projects/[projectId]` deletes a project
+  - Owner checks are enforced for rename/delete mutations
+  - Unauthenticated requests return `401`
+  - Non-owner mutations return `403`
+- Wired editor home page to project data:
+  - `app/editor/page.tsx` loads `ownedProjects` and `sharedProjects` server-side via `getProjectLists()`
+  - `lib/projects.ts` fetches owned projects and derives stable slugs
+- Implemented `hooks/use-project-actions.ts` for project management flows:
+  - Create dialog state and project name input
+  - Short unique suffix generation for room ID alignment
+  - Slugify project names for room ID preview
+  - `POST /api/projects` to create a new project and navigate to `/editor/[projectId]` (fixed routing)
+  - `PATCH /api/projects/[id]` for renaming
+  - `DELETE /api/projects/[id]` for deletion
+  - Confirm delete and refresh/redirect logic for active workspace removal
+- Connected UI components to real project data:
+  - `components/editor/editor-home.tsx` renders the editor home with real owned/shared projects
+  - `components/editor/project-sidebar.tsx` lists projects and exposes rename/delete actions
+  - `components/editor/project-dialogs.tsx` renders create, rename, and delete dialogs with slug preview and confirmation copy
+- Built active workspace shell with server-side access checks:
+  - `app/editor/[roomId]/page.tsx` redirects unauthenticated users to `/sign-in`
+  - `components/editor/access-denied.tsx` handles unauthorized or missing projects
+  - `lib/project-access.ts` resolves Clerk identity and project access by owner or collaborator
+- Fixed routing bug:
+  - Changed project creation redirect from query parameter `/editor?projectId=...` to path-based `/editor/[projectId]`
+- Implemented workspace sharing:
+  - Added `GET /api/projects/[projectId]/collaborators` for accessible users to list collaborators
+  - Added owner-only `POST /api/projects/[projectId]/collaborators` invite flow by normalized email
+  - Added owner-only `DELETE /api/projects/[projectId]/collaborators` removal flow
+  - Enriched collaborator emails with Clerk display name and avatar when a matching Clerk user exists
+  - Wired the editor navbar Share button to the share dialog
+  - Owners can invite, remove, view collaborators, and copy the project link with temporary `Copied!` feedback
+  - Collaborators can open the share dialog in read-only mode and view the collaborator list
+  - Normalized shared-project email lookup so invited collaborators can see shared projects reliably
 
 ## In Progress
 
-- Project dialogs & editor home implementation
+- No active implementation task.
 
 ## Next Up
 
-- Add the next planned feature unit here.
+- Canvas rendering and Liveblocks integration
+- AI sidebar persistence
 
 ## Recent Completions
+- Fixed critical routing issue in `hooks/use-project-actions.ts` - project creation now redirects to correct path-based URL
+- Implemented share dialog API and workspace UI wiring per `context/feature-specs/09-share-dialog.md`
+- Verified `npm.cmd run build` passes after PowerShell blocked the `npm.ps1` shim
 
-- **Authentication Integration**: COMPLETE
-  - Added root `app/layout.tsx` wrapper with `ClerkProvider` using Clerk dark theme
-  - Added `proxy.ts` to protect all routes by default and allow public auth routes only
-  - Added sign-in and sign-up pages with minimal two-panel desktop layouts and CSS variable driven styling
-  - Added `UserButton` to editor navbar for built-in Clerk user menu and logout
-  - Updated `/` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`
-  - Build verification passed with no errors
-
-- **Editor Chrome Implementation**: COMPLETE
-  - Created components/editor/editor-navbar.tsx with fixed-height navbar, sidebar toggle button, and dark styling
-  - Created components/editor/project-sidebar.tsx with floating overlay sidebar, tabs for My Projects/Shared, and New Project button
-  - Components compile without TypeScript errors and pass linting
-  - Dialog pattern ready for future use (shadcn Dialog already styled with dark theme)
-
-- **Design System Implementation**: COMPLETE
-  - All 7 shadcn/ui components created (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea)
-  - lucide-react installed for icon support
-  - lib/utils.ts with cn() helper for Tailwind class merging
-  - Dark theme styling applied and verified across all components
-  - Build verification passed with no errors
-
-- **Sign-in/Sign-up UI Refinement**: COMPLETE
-  - Updated both sign-in and sign-up pages with 50/50 left-right layout matching screenshot
-  - Added lucide-react icons (Zap, Users, FileText) for feature highlights
-  - Improved typography: larger logo (text-4xl), proper heading hierarchy, correct font sizes
-  - Enhanced spacing and visual hierarchy with proper Tailwind classes
-  - Applied proper CSS variable tokens for colors (--bg-surface, --accent-primary, etc.)
-  - Added footer copyright text
-  - Removed inline style attributes, using font-geist-sans class instead
-  - Left panel uses bg-surface for better visual separation from dark background
+- Authentication integration, editor chrome, and design system implementation are complete and stable.
 
 ## Open Questions
 

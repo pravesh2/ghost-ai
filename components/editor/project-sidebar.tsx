@@ -1,12 +1,13 @@
 ﻿import { Pencil, Plus, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { Project } from "@/hooks/use-project-dialogs";
+import type { Project } from "@/hooks/use-project-actions";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
   projects: Project[];
+  activeProjectId?: string;
   onCreateProject: () => void;
   onRenameProject: (projectId: string) => void;
   onDeleteProject: (projectId: string) => void;
@@ -16,6 +17,7 @@ export function ProjectSidebar({
   isOpen,
   onClose,
   projects,
+  activeProjectId,
   onCreateProject,
   onRenameProject,
   onDeleteProject,
@@ -59,46 +61,66 @@ export function ProjectSidebar({
               {myProjects.length === 0 ? (
                 <div className="text-center text-gray-400 py-8">No projects yet</div>
               ) : (
-                myProjects.map((project) => (
-                  <div key={project.id} className="rounded-2xl border border-gray-700 bg-gray-950 p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-semibold text-white">{project.name}</p>
-                        <p className="mt-1 text-sm text-gray-500">/{project.slug}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRenameProject(project.id)}
-                          title="Rename project"
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onDeleteProject(project.id)}
-                          title="Delete project"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                myProjects.map((project) => {
+                  const isActive = project.id === activeProjectId
+                  return (
+                    <div
+                      key={project.id}
+                      className={`rounded-2xl border p-4 ${
+                        isActive
+                          ? "border-sky-500 bg-slate-800"
+                          : "border-gray-700 bg-gray-950"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="font-semibold text-white">{project.name}</p>
+                          <p className="mt-1 text-sm text-gray-500">/{project.slug}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => onRenameProject(project.id)}
+                            title="Rename project"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => onDeleteProject(project.id)}
+                            title="Delete project"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  )
+                })
               )}
             </TabsContent>
             <TabsContent value="shared" className="mt-4 space-y-3">
               {sharedProjects.length === 0 ? (
                 <div className="text-center text-gray-400 py-8">No shared projects yet</div>
               ) : (
-                sharedProjects.map((project) => (
-                  <div key={project.id} className="rounded-2xl border border-gray-700 bg-gray-950 p-4">
-                    <p className="font-semibold text-white">{project.name}</p>
-                    <p className="mt-1 text-sm text-gray-500">/{project.slug}</p>
-                  </div>
-                ))
+                sharedProjects.map((project) => {
+                  const isActive = project.id === activeProjectId
+                  return (
+                    <div
+                      key={project.id}
+                      className={`rounded-2xl border p-4 ${
+                        isActive
+                          ? "border-sky-500 bg-slate-800"
+                          : "border-gray-700 bg-gray-950"
+                      }`}
+                    >
+                      <p className="font-semibold text-white">{project.name}</p>
+                      <p className="mt-1 text-sm text-gray-500">/{project.slug}</p>
+                    </div>
+                  )
+                })
               )}
             </TabsContent>
           </Tabs>
