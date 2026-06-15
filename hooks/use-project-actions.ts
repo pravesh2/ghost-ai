@@ -118,7 +118,7 @@ export function useProjectActions(projects: Project[]) {
 
         const project = await response.json()
         closeDialog()
-        router.push(`/editor?projectId=${encodeURIComponent(project.id)}`)
+        router.push(`/editor/${encodeURIComponent(project.id)}`)
       } catch (error) {
         console.error(error)
       } finally {

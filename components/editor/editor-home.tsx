@@ -34,8 +34,12 @@ export default function EditorHomeClient({ ownedProjects, sharedProjects }: Edit
   return (
     <div className="h-screen bg-gray-950 flex flex-col">
       <EditorNavbar
+        projectName="Ghost AI"
         isSidebarOpen={isSidebarOpen}
+        isAiOpen={false}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        onToggleAiSidebar={() => undefined}
+        onShare={() => undefined}
       />
       <main className="flex-1 px-6 py-8 sm:px-10">
         <div className="mx-auto flex h-full max-w-4xl flex-col items-center justify-center text-center">
